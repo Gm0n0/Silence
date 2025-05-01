@@ -74,9 +74,50 @@
       100% { transform: translate(0); }
     }
 
-    .news-post img {
+    .news-title {
+      font-size: 24px;
+      margin: 0;
+      color: #00a2ff;
+    }
+
+    .news-summary {
+      font-size: 16px;
+      color: #00a2ff;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
       width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.95);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background-color: #000;
+      color: #00a2ff;
+      padding: 30px;
       border-radius: 8px;
+      max-width: 700px;
+      width: 80%;
+      border: 1px solid #00a2ff;
+      text-shadow: 0 0 5px #00a2ff;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      font-size: 30px;
+      color: #00a2ff;
+      background: none;
+      border: none;
+      cursor: pointer;
     }
 
     .nav-btn {
@@ -95,10 +136,6 @@
       background-color: #0088cc;
       transform: scale(1.1);
     }
-
-    .modal {
-      display: none;
-    }
   </style>
 </head>
 <body>
@@ -106,24 +143,53 @@
 
   <div class="news-container">
     <h1>Available Gifts</h1>
-
+    
     <button class="nav-btn" onclick="window.location.href='gifts.html'">Go to Gifts</button>
     <button class="nav-btn" onclick="window.location.href='news.html'">Go to News</button>
 
-    <div class="news-post" onclick="sendToTelegram('Bear Giveaway soon')">
-      <img src="image1.png" alt="1 MAY">
+    <div class="news-post" onclick="openModal('news1')">
+      <h2 class="news-title">Soon..</h2>
+      <p class="news-summary">Don't miss it out</p>
     </div>
-    <div class="news-post" onclick="sendToTelegram('New 1 May Gift')">
-      <img src="image2.png" alt="HAPPY BDAY">
-    </div>
-    <div class="news-post" onclick="sendToTelegram('SilenceNFT START')">
-      <img src="image3.gif" alt="SilenceNFT Start">
+  </div>
+
+  <div id="newsModal" class="modal">
+    <div class="modal-content">
+      <button class="close-btn" onclick="closeModal()">×</button>
+      <h2 id="modalTitle">Title of the News</h2>
+      <p id="modalContent">Details about the news post go here...</p>
     </div>
   </div>
 
   <script>
     const botToken = '8052878806:AAEO-EP0dAWWeiirlKgiY3l_iGNLoi8M0h0';
     const chatId = '8052878806';
+
+    function openModal(newsId) {
+      const modal = document.getElementById("newsModal");
+      const modalTitle = document.getElementById("modalTitle");
+      const modalContent = document.getElementById("modalContent");
+
+      if (newsId === "news1") {
+        modalTitle.textContent = "Bear Giveaway soon";
+        modalContent.textContent = "Don't miss it out";
+        sendToTelegram('Bear Giveaway soon: Don\'t miss it out');
+      } else if (newsId === "news2") {
+        modalTitle.textContent = "New 1 may gift";
+        modalContent.textContent = "price:100";
+        sendToTelegram('New 1 may gift: price 100');
+      } else if (newsId === "news3") {
+        modalTitle.textContent = "SilenceNFT START";
+        modalContent.textContent = "01.05.2025";
+        sendToTelegram('SilenceNFT START: 01.05.2025');
+      }
+
+      modal.style.display = "flex";
+    }
+
+    function closeModal() {
+      document.getElementById("newsModal").style.display = "none";
+    }
 
     function sendToTelegram(message) {
       const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
