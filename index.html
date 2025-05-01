@@ -1,114 +1,92 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Telegram Mini App</title>
-  <script src="https://telegram.org/js/telegram-web-app.js"></script>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Segoe UI', sans-serif;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gift Shop - Telegram Mini App</title>
+    <style>
+        /* Global Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #000;
+            color: white;
+            text-align: center;
+        }
 
-    body {
-      background-color: #121212;
-      color: #f1f1f1;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-    }
+        h1 {
+            margin-top: 50px;
+            font-size: 36px;
+        }
 
-    header {
-      padding: 20px;
-      text-align: center;
-      font-size: 24px;
-      font-weight: bold;
-      background-color: #1f1f1f;
-      border-bottom: 1px solid #333;
-    }
+        /* Main Container */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
 
-    .content {
-      flex: 1;
-      padding: 20px;
-      overflow-y: auto;
-    }
+        /* Buttons */
+        .button-container {
+            margin-top: 30px;
+            display: flex;
+            justify-content: space-around;
+        }
 
-    .blog-post {
-      background-color: #1f1f1f;
-      padding: 15px;
-      margin-bottom: 15px;
-      border-radius: 10px;
-      border: 1px solid #333;
-    }
+        .button-container a {
+            display: inline-block;
+            background-color: #333;
+            color: white;
+            padding: 15px 30px;
+            font-size: 18px;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
 
-    .blog-post h3 {
-      margin-bottom: 8px;
-      font-size: 18px;
-      color: #ffffff;
-    }
+        .button-container a:hover {
+            background-color: #555;
+        }
 
-    .blog-post p {
-      color: #cccccc;
-      font-size: 14px;
-    }
-
-    .bottom-buttons {
-      display: flex;
-      justify-content: space-around;
-      background-color: #1a1a1a;
-      padding: 15px;
-      border-top: 1px solid #333;
-    }
-
-    .bottom-buttons button {
-      background-color: #2a2a2a;
-      color: #fff;
-      border: none;
-      padding: 10px 20px;
-      font-size: 16px;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: background 0.2s;
-    }
-
-    .bottom-buttons button:hover {
-      background-color: #444;
-    }
-  </style>
+        /* Footer Section */
+        footer {
+            position: fixed;
+            bottom: 20px;
+            width: 100%;
+            text-align: center;
+            font-size: 14px;
+        }
+    </style>
 </head>
 <body>
-  <header>🖤 Telegram Mini Blog</header>
+    <div class="container">
+        <h1>Welcome to the Gift Shop</h1>
+        <p>Explore our collection of gifts and make your selection!</p>
 
-  <div class="content">
-    <div class="blog-post">
-      <h3>🎉 Welcome to the Gift Shop</h3>
-      <p>Check out what's new and trending in your gift inventory.</p>
+        <div class="button-container">
+            <a href="#" id="newsButton">About News</a>
+            <a href="#" id="menuButton">Menu (Available Gifts)</a>
+        </div>
+
+        <div class="button-container" style="margin-top: 40px;">
+            <a href="https://gm0n0.github.io/Silence/" target="_blank">Open Gift Shop</a>
+        </div>
     </div>
-    <div class="blog-post">
-      <h3>🔥 Limited-Time Offers</h3>
-      <p>Special animated flowers and effects available only this week!</p>
-    </div>
-  </div>
 
-  <div class="bottom-buttons">
-    <button onclick="openNews()">📰 News</button>
-    <button onclick="openMenu()">🎁 Menu</button>
-  </div>
+    <footer>
+        <p>&copy; 2025 Gift Shop. All rights reserved.</p>
+    </footer>
 
-  <script>
-    const tg = window.Telegram.WebApp;
-    tg.expand();
+    <script>
+        // Add functionality to the buttons
+        document.getElementById('newsButton').addEventListener('click', function() {
+            alert("About the News: Stay tuned for the latest updates!");
+        });
 
-    function openNews() {
-      tg.sendData("open_news");
-    }
-
-    function openMenu() {
-      tg.sendData("open_menu");
-    }
-  </script>
+        document.getElementById('menuButton').addEventListener('click', function() {
+            alert("Menu: Available Gifts are being updated regularly!");
+        });
+    </script>
 </body>
 </html>
