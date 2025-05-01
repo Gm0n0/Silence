@@ -1,17 +1,17 @@
-from telegram import Update, ReplyKeyboardMarkup, KeyboardButton, WebAppInfo
+from telegram import Update, KeyboardButton, ReplyKeyboardMarkup, WebAppInfo
 from telegram.ext import Application, CommandHandler, ContextTypes
 
-TOKEN = "YOUR_BOT_TOKEN"
-WEB_APP_URL = "https://your-mini-app.com"  # Must be HTTPS
+TOKEN = "8052878806:AAEO-EP0dAWWeiirlKgiY3l_iGNLoi8M0h0"
+WEB_APP_URL = "https://gm0n0.github.io/Silence/"  # Must be HTTPS
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     keyboard = [
-        [KeyboardButton(text="🛍 Open Gift Shop", web_app=WebAppInfo(url=WEB_APP_URL))]
+        [KeyboardButton(text="🚀 Open Mini App", web_app=WebAppInfo(url=WEB_APP_URL))]
     ]
     reply_markup = ReplyKeyboardMarkup(keyboard, resize_keyboard=True)
 
     await update.message.reply_text(
-        "Welcome! Tap the button below to open the shop.",
+        "Welcome! Tap the button below to open the mini app:",
         reply_markup=reply_markup
     )
 
