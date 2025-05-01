@@ -1,1 +1,114 @@
-weqeq
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Telegram Mini App</title>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    body {
+      background-color: #121212;
+      color: #f1f1f1;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    header {
+      padding: 20px;
+      text-align: center;
+      font-size: 24px;
+      font-weight: bold;
+      background-color: #1f1f1f;
+      border-bottom: 1px solid #333;
+    }
+
+    .content {
+      flex: 1;
+      padding: 20px;
+      overflow-y: auto;
+    }
+
+    .blog-post {
+      background-color: #1f1f1f;
+      padding: 15px;
+      margin-bottom: 15px;
+      border-radius: 10px;
+      border: 1px solid #333;
+    }
+
+    .blog-post h3 {
+      margin-bottom: 8px;
+      font-size: 18px;
+      color: #ffffff;
+    }
+
+    .blog-post p {
+      color: #cccccc;
+      font-size: 14px;
+    }
+
+    .bottom-buttons {
+      display: flex;
+      justify-content: space-around;
+      background-color: #1a1a1a;
+      padding: 15px;
+      border-top: 1px solid #333;
+    }
+
+    .bottom-buttons button {
+      background-color: #2a2a2a;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .bottom-buttons button:hover {
+      background-color: #444;
+    }
+  </style>
+</head>
+<body>
+  <header>🖤 Telegram Mini Blog</header>
+
+  <div class="content">
+    <div class="blog-post">
+      <h3>🎉 Welcome to the Gift Shop</h3>
+      <p>Check out what's new and trending in your gift inventory.</p>
+    </div>
+    <div class="blog-post">
+      <h3>🔥 Limited-Time Offers</h3>
+      <p>Special animated flowers and effects available only this week!</p>
+    </div>
+  </div>
+
+  <div class="bottom-buttons">
+    <button onclick="openNews()">📰 News</button>
+    <button onclick="openMenu()">🎁 Menu</button>
+  </div>
+
+  <script>
+    const tg = window.Telegram.WebApp;
+    tg.expand();
+
+    function openNews() {
+      tg.sendData("open_news");
+    }
+
+    function openMenu() {
+      tg.sendData("open_menu");
+    }
+  </script>
+</body>
+</html>
