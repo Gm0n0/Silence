@@ -119,6 +119,23 @@
       border: none;
       cursor: pointer;
     }
+
+    .nav-btn {
+      background-color: #00a2ff;
+      color: black;
+      padding: 15px 30px;
+      margin: 10px;
+      font-size: 20px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .nav-btn:hover {
+      background-color: #0088cc;
+      transform: scale(1.1);
+    }
   </style>
 </head>
 <body>
@@ -126,6 +143,10 @@
 
   <div class="news-container">
     <h1>Latest News</h1>
+    
+    <button class="nav-btn" onclick="window.location.href='gifts.html'">Go to Gifts</button>
+    <button class="nav-btn" onclick="window.location.href='news.html'">Go to News</button>
+
     <div class="news-post" onclick="openModal('news1')">
       <h2 class="news-title">Bear Giveaway soon</h2>
       <p class="news-summary">Don't miss it out</p>
@@ -206,7 +227,7 @@
       ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      ctx.fillStyle = "#00ccff";
+      ctx.fillStyle = "#0ff";
       ctx.font = `${fontSize}px 'Share Tech Mono'`;
 
       for (let i = 0; i < drops.length; i++) {
