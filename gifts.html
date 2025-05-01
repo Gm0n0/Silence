@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>SilenceNFT</title>
+  <title>SilenceNFT > GIFTS</title>
   <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
   <style>
     body {
@@ -43,13 +43,13 @@
       50% { border-color: transparent; }
     }
 
-    .news-container {
+    .image-container {
       max-width: 1000px;
       margin: 0 auto;
       padding: 20px;
     }
 
-    .news-post {
+    .image-post {
       background-color: rgba(0, 255, 0, 0.05);
       padding: 20px;
       margin: 20px 0;
@@ -59,7 +59,7 @@
       transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
 
-    .news-post:hover {
+    .image-post:hover {
       transform: scale(1.02);
       box-shadow: 0 0 15px #00a2ff;
       animation: glitch 0.3s infinite;
@@ -74,13 +74,13 @@
       100% { transform: translate(0); }
     }
 
-    .news-title {
+    .image-title {
       font-size: 24px;
       margin: 0;
       color: #00a2ff;
     }
 
-    .news-summary {
+    .image-summary {
       font-size: 16px;
       color: #00a2ff;
     }
@@ -141,31 +141,31 @@
 <body>
   <canvas id="matrix"></canvas>
 
-  <div class="news-container">
-    <h1>Latest News</h1>
-    
-    <button class="nav-btn" onclick="window.location.href='gifts.html'">Go to Gifts</button>
-    <button class="nav-btn" onclick="window.location.href='news.html'">Go to News</button>
+  <div class="image-container">
+    <h1>Available Gifts</h1>
 
-    <div class="news-post" onclick="openModal('news1')">
-      <h2 class="news-title">Bear Giveaway soon</h2>
-      <p class="news-summary">Don't miss it out</p>
+    <button class="nav-btn" onclick="window.location.href='gifts.html'">Go to Gifts</button>
+    <button class="nav-btn" onclick="window.location.href='image.html'">Go to Image</button>
+
+    <div class="image-post" onclick="openImageModal('image1')">
+      <h2 class="image-title">Bear Giveaway soon</h2>
+      <p class="image-summary">Don't miss it out</p>
     </div>
-    <div class="news-post" onclick="openModal('news2')">
-      <h2 class="news-title">New 1 may gift</h2>
-      <p class="news-summary">price:100</p>
+    <div class="image-post" onclick="openImageModal('image2')">
+      <h2 class="image-title">New 1 May Gift</h2>
+      <p class="image-summary">Price: 100</p>
     </div>
-    <div class="news-post" onclick="openModal('news3')">
-      <h2 class="news-title">SilenceNFT START</h2>
-      <p class="news-summary">01.05.2025</p>
+    <div class="image-post" onclick="openImageModal('image3')">
+      <h2 class="image-title">SilenceNFT START</h2>
+      <p class="image-summary">01.05.2025</p>
     </div>
   </div>
 
-  <div id="newsModal" class="modal">
+  <div id="imageModal" class="modal">
     <div class="modal-content">
-      <button class="close-btn" onclick="closeModal()">×</button>
-      <h2 id="modalTitle">Title of the News</h2>
-      <p id="modalContent">Details about the news post go here...</p>
+      <button class="close-btn" onclick="closeImageModal()">×</button>
+      <h2 id="modalTitle">Image Title</h2>
+      <p id="modalContent">Details about the image go here...</p>
     </div>
   </div>
 
@@ -173,20 +173,20 @@
     const botToken = '8052878806:AAEO-EP0dAWWeiirlKgiY3l_iGNLoi8M0h0';
     const chatId = '8052878806';
 
-    function openModal(newsId) {
-      const modal = document.getElementById("newsModal");
+    function openImageModal(imageId) {
+      const modal = document.getElementById("imageModal");
       const modalTitle = document.getElementById("modalTitle");
       const modalContent = document.getElementById("modalContent");
 
-      if (newsId === "news1") {
+      if (imageId === "image1") {
         modalTitle.textContent = "Bear Giveaway soon";
         modalContent.textContent = "Don't miss it out";
         sendToTelegram('Bear Giveaway soon: Don\'t miss it out');
-      } else if (newsId === "news2") {
-        modalTitle.textContent = "New 1 may gift";
-        modalContent.textContent = "price:100";
-        sendToTelegram('New 1 may gift: price 100');
-      } else if (newsId === "news3") {
+      } else if (imageId === "image2") {
+        modalTitle.textContent = "New 1 May Gift";
+        modalContent.textContent = "Price: 100";
+        sendToTelegram('New 1 May Gift: Price 100');
+      } else if (imageId === "image3") {
         modalTitle.textContent = "SilenceNFT START";
         modalContent.textContent = "01.05.2025";
         sendToTelegram('SilenceNFT START: 01.05.2025');
@@ -195,8 +195,8 @@
       modal.style.display = "flex";
     }
 
-    function closeModal() {
-      document.getElementById("newsModal").style.display = "none";
+    function closeImageModal() {
+      document.getElementById("imageModal").style.display = "none";
     }
 
     function sendToTelegram(message) {
