@@ -1,147 +1,227 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About News</title>
-    <style>
-        /* Global Styles */
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #000;
-            color: white;
-            margin: 0;
-            padding: 0;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About News</title>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Share Tech Mono', monospace;
+      background-color: black;
+      color: #00ff00;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
 
-        h1 {
-            text-align: center;
-            font-size: 36px;
-            margin-top: 50px;
-        }
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: -1;
+    }
 
-        .news-container {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 20px;
-        }
+    h1 {
+      text-align: center;
+      font-size: 36px;
+      margin-top: 50px;
+      text-shadow: 0 0 10px #00ff00;
+      white-space: nowrap;
+      overflow: hidden;
+      border-right: 2px solid #00ff00;
+      width: 0;
+      animation: typing 3s steps(40, end) forwards, blink 0.8s infinite;
+    }
 
-        /* News Post */
-        .news-post {
-            background-color: #333;
-            padding: 20px;
-            margin: 20px 0;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
+    @keyframes typing {
+      from { width: 0; }
+      to { width: 19ch; }
+    }
 
-        .news-post:hover {
-            background-color: #555;
-        }
+    @keyframes blink {
+      50% { border-color: transparent; }
+    }
 
-        .news-title {
-            font-size: 24px;
-            margin: 0;
-        }
+    .news-container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 20px;
+    }
 
-        .news-summary {
-            font-size: 16px;
-            color: #ccc;
-        }
+    .news-post {
+      background-color: rgba(0, 255, 0, 0.05);
+      padding: 20px;
+      margin: 20px 0;
+      border-radius: 8px;
+      cursor: pointer;
+      border: 1px solid #00ff00;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
 
-        /* News Modal (for detailed info) */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-        }
+    .news-post:hover {
+      transform: scale(1.02);
+      box-shadow: 0 0 15px #00ff00;
+      animation: glitch 0.3s infinite;
+    }
 
-        .modal-content {
-            background-color: #171717;
-            color: white;
-            padding: 30px;
-            border-radius: 8px;
-            max-width: 700px;
-            width: 80%;
-        }
+    @keyframes glitch {
+      0% { transform: translate(0); }
+      20% { transform: translate(-1px, 1px); }
+      40% { transform: translate(1px, -1px); }
+      60% { transform: translate(-1px, 0); }
+      80% { transform: translate(1px, 1px); }
+      100% { transform: translate(0); }
+    }
 
-        .modal-content h2 {
-            margin-top: 0;
-        }
+    .news-title {
+      font-size: 24px;
+      margin: 0;
+      color: #00ff00;
+    }
 
-        .close-btn {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            font-size: 30px;
-            color: white;
-            background: none;
-            border: none;
-            cursor: pointer;
-        }
+    .news-summary {
+      font-size: 16px;
+      color: #00ff99;
+    }
 
-    </style>
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.95);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background-color: #000;
+      color: #00ff00;
+      padding: 30px;
+      border-radius: 8px;
+      max-width: 700px;
+      width: 80%;
+      border: 1px solid #00ff00;
+      text-shadow: 0 0 5px #00ff00;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      font-size: 30px;
+      color: #00ff00;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+  </style>
 </head>
 <body>
-    <div class="news-container">
-        <h1>Latest News</h1>
-        <div class="news-post" onclick="openModal('news1')">
-            <h2 class="news-title">Bear Giveaway soon</h2>
-            <p class="news-summary">Dont miss it out</p>
-        </div>
-        <div class="news-post" onclick="openModal('news2')">
-            <h2 class="news-title">New 1 may gift</h2>
-            <p class="news-summary">price:100</p>
-        </div>
-        <div class="news-post" onclick="openModal('news3')">
-            <h2 class="news-title">SilenceNFT START</h2>
-            <p class="news-summary">01.05.2025</p>
-        </div>
+  <canvas id="matrix"></canvas>
+
+  <div class="news-container">
+    <h1>Latest News</h1>
+    <div class="news-post" onclick="openModal('news1')">
+      <h2 class="news-title">Bear Giveaway soon</h2>
+      <p class="news-summary">Don't miss it out</p>
     </div>
-
-    <!-- Modal for News Details -->
-    <div id="newsModal" class="modal">
-        <div class="modal-content">
-            <button class="close-btn" onclick="closeModal()">×</button>
-            <h2 id="modalTitle">Title of the News</h2>
-            <p id="modalContent">Details about the news post go here...</p>
-        </div>
+    <div class="news-post" onclick="openModal('news2')">
+      <h2 class="news-title">New 1 may gift</h2>
+      <p class="news-summary">price:100</p>
     </div>
+    <div class="news-post" onclick="openModal('news3')">
+      <h2 class="news-title">SilenceNFT START</h2>
+      <p class="news-summary">01.05.2025</p>
+    </div>
+  </div>
 
-    <script>
-        // Function to open the modal and show news content
-        function openModal(newsId) {
-            var modal = document.getElementById("newsModal");
-            var modalTitle = document.getElementById("modalTitle");
-            var modalContent = document.getElementById("modalContent");
+  <div id="newsModal" class="modal">
+    <div class="modal-content">
+      <button class="close-btn" onclick="closeModal()">×</button>
+      <h2 id="modalTitle">Title of the News</h2>
+      <p id="modalContent">Details about the news post go here...</p>
+    </div>
+  </div>
 
-            if (newsId === "news1") {
-                modalTitle.textContent = "Bear Giveaway soon";
-                modalContent.textContent = "Dont miss it out";
-            } else if (newsId === "news2") {
-                modalTitle.textContent = "New 1 may gift";
-                modalContent.textContent = "price:100";
-            } else if (newsId === "news3") {
-                modalTitle.textContent = "SilenceNFT START";
-                modalContent.textContent = "01.05.2025";
-            }
+  <script>
+    const botToken = 'YOUR_BOT_TOKEN';
+    const chatId = 'YOUR_CHAT_ID';
 
-            modal.style.display = "flex"; // Show the modal
+    function openModal(newsId) {
+      const modal = document.getElementById("newsModal");
+      const modalTitle = document.getElementById("modalTitle");
+      const modalContent = document.getElementById("modalContent");
+
+      if (newsId === "news1") {
+        modalTitle.textContent = "Bear Giveaway soon";
+        modalContent.textContent = "Don't miss it out";
+        sendToTelegram('Bear Giveaway soon: Don\'t miss it out');
+      } else if (newsId === "news2") {
+        modalTitle.textContent = "New 1 may gift";
+        modalContent.textContent = "price:100";
+        sendToTelegram('New 1 may gift: price 100');
+      } else if (newsId === "news3") {
+        modalTitle.textContent = "SilenceNFT START";
+        modalContent.textContent = "01.05.2025";
+        sendToTelegram('SilenceNFT START: 01.05.2025');
+      }
+
+      modal.style.display = "flex";
+    }
+
+    function closeModal() {
+      document.getElementById("newsModal").style.display = "none";
+    }
+
+    function sendToTelegram(message) {
+      const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
+      fetch(url, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ chat_id: chatId, text: message })
+      })
+      .then(res => res.json())
+      .then(data => console.log('Telegram:', data))
+      .catch(err => console.error('Telegram Error:', err));
+    }
+
+    // Matrix background animation
+    const canvas = document.getElementById("matrix");
+    const ctx = canvas.getContext("2d");
+
+    canvas.height = window.innerHeight;
+    canvas.width = window.innerWidth;
+
+    const matrix = "01";
+    const fontSize = 16;
+    const columns = canvas.width / fontSize;
+    const drops = Array(Math.floor(columns)).fill(1);
+
+    function drawMatrix() {
+      ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      ctx.fillStyle = "#0f0";
+      ctx.font = `${fontSize}px 'Share Tech Mono'`;
+
+      for (let i = 0; i < drops.length; i++) {
+        const text = matrix[Math.floor(Math.random() * matrix.length)];
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+          drops[i] = 0;
         }
 
-        // Function to close the modal
-        function closeModal() {
-            var modal = document.getElementById("newsModal");
-            modal.style.display = "none"; // Hide the modal
-        }
-    </script>
+        drops[i]++;
+      }
+    }
+
+    setInterval(drawMatrix, 33);
+  </script>
 </body>
 </html>
