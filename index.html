@@ -3,90 +3,145 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gift Shop - Telegram Mini App</title>
+    <title>About News</title>
     <style>
         /* Global Styles */
         body {
             font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
             background-color: #000;
             color: white;
-            text-align: center;
+            margin: 0;
+            padding: 0;
         }
 
         h1 {
-            margin-top: 50px;
+            text-align: center;
             font-size: 36px;
+            margin-top: 50px;
         }
 
-        /* Main Container */
-        .container {
-            max-width: 800px;
+        .news-container {
+            max-width: 1000px;
             margin: 0 auto;
             padding: 20px;
         }
 
-        /* Buttons */
-        .button-container {
-            margin-top: 30px;
-            display: flex;
-            justify-content: space-around;
-        }
-
-        .button-container a {
-            display: inline-block;
+        /* News Post */
+        .news-post {
             background-color: #333;
-            color: white;
-            padding: 15px 30px;
-            font-size: 18px;
-            text-decoration: none;
-            border-radius: 5px;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            cursor: pointer;
             transition: background-color 0.3s ease;
         }
 
-        .button-container a:hover {
+        .news-post:hover {
             background-color: #555;
         }
 
-        /* Footer Section */
-        footer {
-            position: fixed;
-            bottom: 20px;
-            width: 100%;
-            text-align: center;
-            font-size: 14px;
+        .news-title {
+            font-size: 24px;
+            margin: 0;
         }
+
+        .news-summary {
+            font-size: 16px;
+            color: #ccc;
+        }
+
+        /* News Modal (for detailed info) */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: #333;
+            color: white;
+            padding: 30px;
+            border-radius: 8px;
+            max-width: 700px;
+            width: 80%;
+        }
+
+        .modal-content h2 {
+            margin-top: 0;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 30px;
+            color: white;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Welcome to the Gift Shop</h1>
-        <p>Explore our collection of gifts and make your selection!</p>
-
-        <div class="button-container">
-            <a href="#" id="newsButton">About News</a>
-            <a href="#" id="menuButton">Menu (Available Gifts)</a>
+    <div class="news-container">
+        <h1>Latest News</h1>
+        <div class="news-post" onclick="openModal('news1')">
+            <h2 class="news-title">Exciting Gift Updates Coming Soon!</h2>
+            <p class="news-summary">A sneak peek into upcoming features in our Gift Shop...</p>
         </div>
-
-        <div class="button-container" style="margin-top: 40px;">
-            <a href="https://gm0n0.github.io/Silence/" target="_blank">Open Gift Shop</a>
+        <div class="news-post" onclick="openModal('news2')">
+            <h2 class="news-title">New Gifts Added to the Shop!</h2>
+            <p class="news-summary">Check out the latest additions to our gift collection...</p>
+        </div>
+        <div class="news-post" onclick="openModal('news3')">
+            <h2 class="news-title">Special Offers on All Gifts</h2>
+            <p class="news-summary">Limited-time discounts on selected gifts. Don't miss out!</p>
         </div>
     </div>
 
-    <footer>
-        <p>&copy; 2025 Gift Shop. All rights reserved.</p>
-    </footer>
+    <!-- Modal for News Details -->
+    <div id="newsModal" class="modal">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal()">×</button>
+            <h2 id="modalTitle">Title of the News</h2>
+            <p id="modalContent">Details about the news post go here...</p>
+        </div>
+    </div>
 
     <script>
-        // Add functionality to the buttons
-        document.getElementById('newsButton').addEventListener('click', function() {
-            alert("About the News: Stay tuned for the latest updates!");
-        });
+        // Function to open the modal and show news content
+        function openModal(newsId) {
+            var modal = document.getElementById("newsModal");
+            var modalTitle = document.getElementById("modalTitle");
+            var modalContent = document.getElementById("modalContent");
 
-        document.getElementById('menuButton').addEventListener('click', function() {
-            alert("Menu: Available Gifts are being updated regularly!");
-        });
+            if (newsId === "news1") {
+                modalTitle.textContent = "Exciting Gift Updates Coming Soon!";
+                modalContent.textContent = "Our gift shop is receiving some exciting updates, including new gift categories and limited-edition items. Stay tuned for the official launch!";
+            } else if (newsId === "news2") {
+                modalTitle.textContent = "New Gifts Added to the Shop!";
+                modalContent.textContent = "We’ve just added a bunch of new gifts to the shop. From fun gadgets to trendy apparel, there’s something for everyone!";
+            } else if (newsId === "news3") {
+                modalTitle.textContent = "Special Offers on All Gifts";
+                modalContent.textContent = "For a limited time, enjoy exclusive discounts on our top-selling gifts. Get your favorite items at a discounted price!";
+            }
+
+            modal.style.display = "flex"; // Show the modal
+        }
+
+        // Function to close the modal
+        function closeModal() {
+            var modal = document.getElementById("newsModal");
+            modal.style.display = "none"; // Hide the modal
+        }
     </script>
 </body>
 </html>
