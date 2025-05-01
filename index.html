@@ -6,32 +6,41 @@
   <title>About News</title>
   <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
   <style>
-    * {
-      box-sizing: border-box;
-    }
-
-    html, body {
+    body {
+      font-family: 'Share Tech Mono', monospace;
+      background-color: black;
+      color: #00ff00;
       margin: 0;
       padding: 0;
-      font-family: 'Share Tech Mono', monospace;
-      background: black;
-      color: white;
+      overflow: hidden;
     }
 
     canvas {
       position: fixed;
       top: 0;
       left: 0;
-      width: 100%;
-      height: 100%;
       z-index: -1;
-      pointer-events: none;
     }
 
     h1 {
       text-align: center;
       font-size: 36px;
       margin-top: 50px;
+      text-shadow: 0 0 10px #00ff00;
+      white-space: nowrap;
+      overflow: hidden;
+      border-right: 2px solid #00ff00;
+      width: 0;
+      animation: typing 3s steps(40, end) forwards, blink 0.8s infinite;
+    }
+
+    @keyframes typing {
+      from { width: 0; }
+      to { width: 19ch; }
+    }
+
+    @keyframes blink {
+      50% { border-color: transparent; }
     }
 
     .news-container {
@@ -41,59 +50,71 @@
     }
 
     .news-post {
-      background-color: #222;
+      background-color: rgba(0, 255, 0, 0.05);
       padding: 20px;
       margin: 20px 0;
       border-radius: 8px;
       cursor: pointer;
-      transition: background-color 0.3s ease;
+      border: 1px solid #00ff00;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
 
     .news-post:hover {
-      background-color: #444;
+      transform: scale(1.02);
+      box-shadow: 0 0 15px #00ff00;
+      animation: glitch 0.3s infinite;
+    }
+
+    @keyframes glitch {
+      0% { transform: translate(0); }
+      20% { transform: translate(-1px, 1px); }
+      40% { transform: translate(1px, -1px); }
+      60% { transform: translate(-1px, 0); }
+      80% { transform: translate(1px, 1px); }
+      100% { transform: translate(0); }
     }
 
     .news-title {
       font-size: 24px;
       margin: 0;
+      color: #00ff00;
     }
 
     .news-summary {
       font-size: 16px;
-      color: #ccc;
+      color: #00ff99;
     }
 
     .modal {
       display: none;
       position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0, 0, 0, 0.8);
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.95);
       z-index: 1000;
       justify-content: center;
       align-items: center;
     }
 
     .modal-content {
-      background-color: #111;
-      color: white;
+      background-color: #000;
+      color: #00ff00;
       padding: 30px;
       border-radius: 8px;
       max-width: 700px;
       width: 80%;
-      position: relative;
-    }
-
-    .modal-content h2 {
-      margin-top: 0;
+      border: 1px solid #00ff00;
+      text-shadow: 0 0 5px #00ff00;
     }
 
     .close-btn {
       position: absolute;
-      top: 15px;
+      top: 20px;
       right: 20px;
-      font-size: 24px;
-      color: white;
+      font-size: 30px;
+      color: #00ff00;
       background: none;
       border: none;
       cursor: pointer;
@@ -101,8 +122,7 @@
   </style>
 </head>
 <body>
-
-  <canvas id="matrixCanvas"></canvas>
+  <canvas id="matrix"></canvas>
 
   <div class="news-container">
     <h1>Latest News</h1>
@@ -123,73 +143,35 @@
   <div id="newsModal" class="modal">
     <div class="modal-content">
       <button class="close-btn" onclick="closeModal()">×</button>
-      <h2 id="modalTitle">Title</h2>
-      <p id="modalContent">Content</p>
+      <h2 id="modalTitle">Title of the News</h2>
+      <p id="modalContent">Details about the news post go here...</p>
     </div>
   </div>
 
   <script>
-    // Matrix Effect (blue)
-    window.onload = function () {
-      const canvas = document.getElementById("matrixCanvas");
-      const ctx = canvas.getContext("2d");
-
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-
-      const characters = "アァカサタナハマヤャラワ0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
-      const fontSize = 16;
-      const columns = Math.floor(canvas.width / fontSize);
-      const drops = Array.from({ length: columns }).fill(1);
-
-      function draw() {
-        ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-        ctx.fillStyle = "#00ccff"; // Blue color
-        ctx.font = fontSize + "px 'Share Tech Mono'";
-
-        for (let i = 0; i < drops.length; i++) {
-          const text = characters[Math.floor(Math.random() * characters.length)];
-          ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-
-          if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-            drops[i] = 0;
-          }
-          drops[i]++;
-        }
-      }
-
-      setInterval(draw, 33);
-    };
-
-    // News Modal + Telegram
-    const botToken = '8052878806:AAEO-EP0dAWWeiirlKgiY3l_iGNLoi8M0h0'; // Replace
-    const chatId = '8052878806';     // Replace
+    const botToken = '8052878806:AAEO-EP0dAWWeiirlKgiY3l_iGNLoi8M0h0';
+    const chatId = '8052878806';
 
     function openModal(newsId) {
       const modal = document.getElementById("newsModal");
       const modalTitle = document.getElementById("modalTitle");
       const modalContent = document.getElementById("modalContent");
 
-      let title = "", content = "";
-
       if (newsId === "news1") {
-        title = "Bear Giveaway soon";
-        content = "Don't miss it out";
+        modalTitle.textContent = "Bear Giveaway soon";
+        modalContent.textContent = "Don't miss it out";
+        sendToTelegram('Bear Giveaway soon: Don\'t miss it out');
       } else if (newsId === "news2") {
-        title = "New 1 may gift";
-        content = "price:100";
+        modalTitle.textContent = "New 1 may gift";
+        modalContent.textContent = "price:100";
+        sendToTelegram('New 1 may gift: price 100');
       } else if (newsId === "news3") {
-        title = "SilenceNFT START";
-        content = "01.05.2025";
+        modalTitle.textContent = "SilenceNFT START";
+        modalContent.textContent = "01.05.2025";
+        sendToTelegram('SilenceNFT START: 01.05.2025');
       }
 
-      modalTitle.textContent = title;
-      modalContent.textContent = content;
       modal.style.display = "flex";
-
-      sendToTelegram(`${title}: ${content}`);
     }
 
     function closeModal() {
@@ -200,13 +182,46 @@
       const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
       fetch(url, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({ chat_id: chatId, text: message })
       })
       .then(res => res.json())
-      .then(data => console.log("Telegram response:", data))
-      .catch(err => console.error("Telegram error:", err));
+      .then(data => console.log('Telegram:', data))
+      .catch(err => console.error('Telegram Error:', err));
     }
+
+    // Matrix background animation
+    const canvas = document.getElementById("matrix");
+    const ctx = canvas.getContext("2d");
+
+    canvas.height = window.innerHeight;
+    canvas.width = window.innerWidth;
+
+    const matrix = "01";
+    const fontSize = 16;
+    const columns = canvas.width / fontSize;
+    const drops = Array(Math.floor(columns)).fill(1);
+
+    function drawMatrix() {
+      ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      ctx.fillStyle = "#0f0";
+      ctx.font = `${fontSize}px 'Share Tech Mono'`;
+
+      for (let i = 0; i < drops.length; i++) {
+        const text = matrix[Math.floor(Math.random() * matrix.length)];
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+          drops[i] = 0;
+        }
+
+        drops[i]++;
+      }
+    }
+
+    setInterval(drawMatrix, 33);
   </script>
 </body>
 </html>
